@@ -134,7 +134,7 @@ Defaults follow your Material 3 theme, including dynamic color and dark mode.
 
 ## Built with AI agents
 
-Meniscus was built by [Zain Shaikh](https://github.com/zainbits) working with AI coding agents (OpenAI Codex and Anthropic's Claude Code). Zain set the goal and the design direction (real liquid physics instead of a canned animation), reviewed the work, and tested it on real devices in two apps. The agents researched the physics, wrote and tested most of the code, and extracted it into this library. Issues and pull requests are reviewed by a human.
+Meniscus was built by [Zain Shaikh](https://github.com/zainbits) working with AI coding agents (OpenAI Codex and Anthropic's Claude Code). Zain set the goal and the design direction (real liquid physics instead of a canned animation), reviewed the work, and tested it on real devices in two apps. The agents wrote and tested most of the code and extracted it into this library. Issues and pull requests are reviewed by a human.
 
 ## License
 
