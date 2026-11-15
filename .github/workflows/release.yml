@@ -1,0 +1,27 @@
+name: Release
+
+# Push a tag like v0.1.0 (matching VERSION_NAME in gradle.properties) to upload a signed release
+# to the Maven Central portal. The upload waits there until it is published from the portal.
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Check the tag matches VERSION_NAME
+        run: test "v$(sed -n 's/^VERSION_NAME=//p' gradle.properties)" = "${GITHUB_REF_NAME}"
+      - name: Upload to Maven Central
+        run: ./gradlew :meniscus:testDebugUnitTest :meniscus:publishToMavenCentral --no-configuration-cache
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
