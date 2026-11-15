@@ -8,12 +8,19 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
 <p align="center">
-  <img src="docs/meniscus.gif" width="392" alt="The selected tab pinches off its group like a liquid drop and merges back when you leave it">
+  <img src="docs/meniscus-bar.gif" width="720" alt="The selected tab pinches off its group like a liquid drop and merges back when you leave it">
 </p>
 
 When you switch tabs, the new tab stretches away from its neighbours, the liquid neck between them thins and snaps, and the old tab flows back into the group. It is not a canned animation: the shape is computed every frame from spring physics and drawn by a single AGSL shader.
 
 A *meniscus* is the curved surface of a liquid bridge between two drops. That curve is exactly what this library draws.
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/meniscus-demo.gif" width="300" alt="Showcase app: content scrolls behind the floating bar while tabs change"><br><sub>Showcase app</sub></td>
+    <td align="center"><img src="docs/meniscus-slowmo.gif" width="480" alt="Slow motion: the liquid neck stretches, thins and snaps"><br><sub>4x slow motion (system animation scale)</sub></td>
+  </tr>
+</table>
 
 ## Why another nav bar
 
