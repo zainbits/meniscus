@@ -4,10 +4,10 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalGraphicsContext
-import io.github.zainbits.liquid.GlassPass
-import io.github.zainbits.liquid.LocalGlassMode
-import io.github.zainbits.liquid.LocalGlassStyle
-import io.github.zainbits.liquid.positionOf
+import io.github.zainbits.cohesion.GlassPass
+import io.github.zainbits.cohesion.LocalGlassMode
+import io.github.zainbits.cohesion.LocalGlassStyle
+import io.github.zainbits.cohesion.positionOf
 import android.graphics.Paint
 import android.graphics.RuntimeShader
 import android.view.RoundedCorner
@@ -197,7 +197,7 @@ public fun MeniscusNavBar(
     var outerBottomLeft by remember { mutableFloatStateOf(fallbackRadiusPx) }
     var outerBottomRight by remember { mutableFloatStateOf(fallbackRadiusPx) }
 
-    // Liquid glass (liquid-core): the bar's outline as a scene drawn by one glass pass.
+    // Liquid glass (Cohesion): the bar's outline as a scene drawn by one glass pass.
     val glassScene = remember { MeniscusScene() }
     val glassPass = remember(glassScene) { GlassPass(glassScene) }
     val graphicsContext = LocalGraphicsContext.current

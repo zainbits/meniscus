@@ -2,8 +2,8 @@
 
 ## Unreleased (feature/liquid-glass)
 
-- `MeniscusNavBar(glass = MeniscusGlass(backdrop))`: the bar as liquid glass over the content behind it (blur, edge lens, lit rim; the selected pill tinted with the selected container colour), through the shared engine `liquid-core`. Without `glass` the bar is unchanged.
-- Depends on `liquid-core` (built from `../liquid-core` until it is published); Android Gradle Plugin 9.2.1.
+- `MeniscusNavBar(glass = MeniscusGlass(backdrop))`: the bar as liquid glass over the content behind it (blur, edge lens, lit rim; the selected pill tinted with the selected container colour), through the shared engine `Cohesion`. Without `glass` the bar is unchanged.
+- Depends on `Cohesion` (built from `../cohesion` until it is published); Android Gradle Plugin 9.2.1.
 - Showcase: Liquid glass switch and clear-to-tinted slider on the Tune screen (glass on by default on this branch).
 
 ## 0.1.0 (2026-11-15)

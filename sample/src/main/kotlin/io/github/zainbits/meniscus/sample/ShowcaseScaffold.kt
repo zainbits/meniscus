@@ -1,8 +1,8 @@
 package io.github.zainbits.meniscus.sample
 
-import io.github.zainbits.liquid.ProvideGlass
-import io.github.zainbits.liquid.glassSource
-import io.github.zainbits.liquid.rememberGlassBackdrop
+import io.github.zainbits.cohesion.ProvideGlass
+import io.github.zainbits.cohesion.glassSource
+import io.github.zainbits.cohesion.rememberGlassBackdrop
 import io.github.zainbits.meniscus.MeniscusGlass
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

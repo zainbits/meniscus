@@ -2,17 +2,17 @@ package io.github.zainbits.meniscus
 
 import android.graphics.RuntimeShader
 import androidx.compose.runtime.Immutable
-import io.github.zainbits.liquid.GlassBackdrop
-import io.github.zainbits.liquid.GlassMode
-import io.github.zainbits.liquid.GlassScene
-import io.github.zainbits.liquid.GlassStyle
+import io.github.zainbits.cohesion.GlassBackdrop
+import io.github.zainbits.cohesion.GlassMode
+import io.github.zainbits.cohesion.GlassScene
+import io.github.zainbits.cohesion.GlassStyle
 
 /**
  * Draws [MeniscusNavBar] as liquid glass over [backdrop] instead of solid colours: the bar's own
  * outline (pills, necks and the pinching drop) bends, blurs and tints what scrolls behind it, and the
  * selected pill is tinted with the selected container colour.
  *
- * Mark the content behind the bar with `Modifier.glassSource(backdrop)` (liquid-core), and place the
+ * Mark the content behind the bar with `Modifier.glassSource(backdrop)` (Cohesion), and place the
  * bar outside that content, drawn after it.
  *
  * @param style the glass look; null = `LocalGlassStyle` with the accent taken from the bar's colours.
