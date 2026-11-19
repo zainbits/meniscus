@@ -220,6 +220,13 @@ fun ControlsScreen(padding: PaddingValues, state: ShowcaseState, onChange: (Show
         }
         item {
             SurfaceCard {
+                ToggleRow("Liquid glass", state.glass) { onChange(state.copy(glass = it)) }
+                Text("Clear  ←  →  Tinted", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                androidx.compose.material3.Slider(value = state.clarity, onValueChange = { onChange(state.copy(clarity = it)) }, enabled = state.glass)
+            }
+        }
+        item {
+            SurfaceCard {
                 Text("io.github.zainbits:meniscus", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurface)
                 Text("github.com/zainbits/meniscus", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
             }

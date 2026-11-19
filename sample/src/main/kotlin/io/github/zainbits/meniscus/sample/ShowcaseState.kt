@@ -34,11 +34,15 @@ data class ShowcaseState(
     val palette: Palette = Palette.Mono,
     val dark: Boolean = true,
     val rtl: Boolean = false,
+    val glass: Boolean = true,
+    val clarity: Float = 0.35f,
 ) {
     companion object {
         val Saver: Saver<ShowcaseState, List<Any>> = Saver(
-            save = { listOf(it.tabCount, it.palette.ordinal, it.dark, it.rtl) },
-            restore = { ShowcaseState(it[0] as Int, Palette.entries[it[1] as Int], it[2] as Boolean, it[3] as Boolean) },
+            save = { listOf(it.tabCount, it.palette.ordinal, it.dark, it.rtl, it.glass, it.clarity) },
+            restore = {
+                ShowcaseState(it[0] as Int, Palette.entries[it[1] as Int], it[2] as Boolean, it[3] as Boolean, it[4] as Boolean, it[5] as Float)
+            },
         )
     }
 }

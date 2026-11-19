@@ -1,5 +1,9 @@
 package io.github.zainbits.meniscus.sample
 
+import io.github.zainbits.liquid.ProvideGlass
+import io.github.zainbits.liquid.glassSource
+import io.github.zainbits.liquid.rememberGlassBackdrop
+import io.github.zainbits.meniscus.MeniscusGlass
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,6 +32,9 @@ fun ShowcaseScaffold(
     destinations: List<Destination>,
     selected: Int,
     onSelect: (Int) -> Unit,
+    glass: Boolean = false,
+    clarity: Float = 0.35f,
+    dark: Boolean = true,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val items = remember(destinations) { destinations.map { MeniscusNavItem(it.label, it.icon) } }
@@ -40,16 +47,22 @@ fun ShowcaseScaffold(
         bottom = bottom + MeniscusNavBarDefaults.BottomGap + MeniscusNavBarDefaults.Height + 24.dp,
     )
 
+    val backdrop = rememberGlassBackdrop()
+    ProvideGlass(clarity = clarity, dark = dark) {
     Box(
         Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        content(contentPadding)
+        // What the glass bar shows through.
+        Box(Modifier.fillMaxSize().glassSource(backdrop).background(MaterialTheme.colorScheme.background)) {
+            content(contentPadding)
+        }
         MeniscusNavBar(
             items = items,
             selectedIndex = selected,
             onSelect = onSelect,
+            glass = if (glass) remember(backdrop) { MeniscusGlass(backdrop) } else null,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal))
@@ -59,5 +72,6 @@ fun ShowcaseScaffold(
                     bottom = MeniscusNavBarDefaults.BottomGap,
                 ),
         )
+    }
     }
 }

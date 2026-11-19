@@ -1,5 +1,13 @@
 package io.github.zainbits.meniscus
 
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.LocalGraphicsContext
+import io.github.zainbits.liquid.GlassPass
+import io.github.zainbits.liquid.LocalGlassMode
+import io.github.zainbits.liquid.LocalGlassStyle
+import io.github.zainbits.liquid.positionOf
 import android.graphics.Paint
 import android.graphics.RuntimeShader
 import android.view.RoundedCorner
@@ -165,6 +173,7 @@ private object MeniscusDimensions {
  * @param onSelect called with the index of the tab the user tapped.
  * @param colors see [MeniscusNavBarDefaults.colors].
  * @param labelStyle text style of the labels of unselected tabs.
+ * @param glass draws the bar as liquid glass over a backdrop instead of solid colours; null = solid.
  */
 @Composable
 public fun MeniscusNavBar(
@@ -174,6 +183,7 @@ public fun MeniscusNavBar(
     modifier: Modifier = Modifier,
     colors: MeniscusNavBarColors = MeniscusNavBarDefaults.colors(),
     labelStyle: TextStyle = MaterialTheme.typography.labelMedium,
+    glass: MeniscusGlass? = null,
 ) {
     val count = items.size
     require(count in 1..MeniscusMotion.MAX_SLOTS) { "MeniscusNavBar supports 1..${MeniscusMotion.MAX_SLOTS} items" }
@@ -186,6 +196,21 @@ public fun MeniscusNavBar(
     val fallbackRadiusPx = with(LocalDensity.current) { MeniscusDimensions.FALLBACK_OUTER_CORNER_RADIUS.toPx() }
     var outerBottomLeft by remember { mutableFloatStateOf(fallbackRadiusPx) }
     var outerBottomRight by remember { mutableFloatStateOf(fallbackRadiusPx) }
+
+    // Liquid glass (liquid-core): the bar's outline as a scene drawn by one glass pass.
+    val glassScene = remember { MeniscusScene() }
+    val glassPass = remember(glassScene) { GlassPass(glassScene) }
+    val graphicsContext = LocalGraphicsContext.current
+    DisposableEffect(glassPass, graphicsContext) {
+        glassPass.attach(graphicsContext)
+        onDispose { glassPass.detach(graphicsContext) }
+    }
+    var glassOffset by remember { mutableStateOf(Offset.Unspecified) }
+    val baseGlassStyle = LocalGlassStyle.current
+    val glassStyle = glass?.style ?: remember(baseGlassStyle, colors.selectedContainerColor) {
+        baseGlassStyle.copy(accentTint = colors.selectedContainerColor, accentSolidColor = colors.selectedContainerColor)
+    }
+    val glassMode = glass?.mode ?: LocalGlassMode.current
 
     LaunchedEffect(model, visualSelected) {
         model.select(visualSelected)
@@ -226,6 +251,7 @@ public fun MeniscusNavBar(
             .height(MeniscusNavBarDefaults.Height)
             .selectableGroup()
             .onGloballyPositioned { coordinates ->
+                if (glass != null) glassOffset = glass.backdrop.positionOf(coordinates) ?: Offset.Unspecified
                 val r = coordinates.size.height * 0.5f
                 val position = coordinates.positionInWindow()
                 val left = position.x
@@ -248,6 +274,11 @@ public fun MeniscusNavBar(
             }
             .drawBehind {
                 frame.longValue
+                if (glass != null) {
+                    glassScene.update(model, size.height * 0.5f, outerBottomLeft, outerBottomRight)
+                    with(glassPass) { draw(graphicsContext, glass.backdrop, glassOffset, glassStyle, glassMode) }
+                    return@drawBehind
+                }
                 renderer.draw(
                     scope = this,
                     model = model,

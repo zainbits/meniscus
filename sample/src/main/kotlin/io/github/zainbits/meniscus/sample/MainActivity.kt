@@ -46,6 +46,9 @@ private fun ShowcaseApp(state: ShowcaseState, onStateChange: (ShowcaseState) -> 
         destinations = destinations,
         selected = selected,
         onSelect = { current = destinations[it] },
+        glass = state.glass,
+        clarity = state.clarity,
+        dark = state.dark,
     ) { contentPadding ->
         AnimatedContent(
             targetState = destinations[selected],
